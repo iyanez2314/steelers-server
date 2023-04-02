@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 const mongoDbAtlasURL = process.env.MONGODBATLAS;
 const app = express();
+const sendgrid = require("@sendgrid/mail");
 
 // Mongoose connection to MongoDB Atlas
 mongoose
@@ -31,7 +32,36 @@ app.use(express.json());
 const port = process.env.PORT || 3000;
 
 // Route to add the users to the DB
-app.use("/join", (req, res) => {});
+app.post("/join", async (req, res) => {
+  try {
+    const user = new User({ email: req.body.email });
+    await user.save();
+    res.status(200).send("Thanks for signing up!");
+  } catch (error) {
+    res.status(500).send("There was an error please try again later");
+  }
+});
+
+app.get("/test", async (req, res) => {
+  try {
+    const users = await User.find({});
+    const emailAddresses = users.map((user) => user.email);
+
+    // Construction of the emails
+    const message = {
+      to: emailAddresses,
+      from: process.env.OWNER,
+      subject: req.body.subject,
+      text: req.body.text,
+    };
+
+    // send using send grid
+
+    res.status(200).send("Emails have been sent!");
+  } catch (error) {
+    res.status(500).send("There was an error please try again later");
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server started on http://localhost:${port}`);
