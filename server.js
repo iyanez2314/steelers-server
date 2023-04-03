@@ -6,6 +6,8 @@ require("dotenv").config();
 const mongoDbAtlasURL = process.env.MONGODBATLAS;
 const app = express();
 const sendgrid = require("@sendgrid/mail");
+const sendGridAPIkey = process.env.SEND_GRID_API;
+sendgrid.setApiKey(sendGridAPIkey);
 
 // Mongoose connection to MongoDB Atlas
 mongoose
@@ -42,24 +44,22 @@ app.post("/join", async (req, res) => {
   }
 });
 
-app.get("/test", async (req, res) => {
+app.post("/emails", async (req, res) => {
   try {
     const users = await User.find({});
     const emailAddresses = users.map((user) => user.email);
-
     // Construction of the emails
     const message = {
       to: emailAddresses,
-      from: process.env.OWNER,
+      from: "isaac231467@icloud.com",
       subject: req.body.subject,
       text: req.body.text,
     };
-
     // send using send grid
-
+    await sendgrid.send(message);
     res.status(200).send("Emails have been sent!");
   } catch (error) {
-    res.status(500).send("There was an error please try again later");
+    res.status(500).send(error);
   }
 });
 
