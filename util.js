@@ -47,7 +47,9 @@ module.exports.emailSender = function (fileName, emailAddresses, req, res) {
     fs.readFile(fileName, "utf-8", (err, template) => {
       if (err) {
         console.log("Error reading the email template: ", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res
+          .status(500)
+          .json({ error: "Error Parsing the HTML Template" });
       }
 
       const date = req.body.date;
@@ -73,8 +75,8 @@ module.exports.emailSender = function (fileName, emailAddresses, req, res) {
           res.status(200).json({ message: "Emails have been sent!" });
         })
         .catch((error) => {
-          console.error("Error sending email: ", error);
-          res.status(500).json({ error: "Internal Server error" });
+          console.error("There was a problem sending emails : ", error);
+          res.status(500).json({ error: error });
         });
     });
   } catch (error) {
