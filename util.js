@@ -30,7 +30,7 @@ module.exports.joinEmailSender = function (fileName, res, req, emailAddress) {
       sendgrid
         .send(msg)
         .then(() => {
-          res.status(200).json({ message: "Emails have been sent" });
+          res.status(200).json({ message: "Email has been sent" });
         })
         .catch((error) => {
           console.error("OOPS there was an error: ", error);

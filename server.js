@@ -41,9 +41,18 @@ const port = process.env.PORT || 3000;
 /*                              ENDPOINT TO JOIN                              */
 /* -------------------------------------------------------------------------- */
 app.post("/join", async (req, res) => {
-  const user = new User({ email: req.body.email });
-  await user.save();
-  joinEmailSender("./join_template.html", res, req, req.body.email);
+  const userEmail = req.body.email;
+  const existingUser = await User.findOne({ email: userEmail });
+  if (existingUser) {
+    console.log("this email already exists");
+    return res
+      .status(400)
+      .json({ error: "sorry this email is already signed up!" });
+  } else {
+    const user = new User({ email: userEmail });
+    const saveUser = await user.save();
+    joinEmailSender("./join_template.html", res, req, userEmail);
+  }
 });
 
 /* -------------------------------------------------------------------------- */
