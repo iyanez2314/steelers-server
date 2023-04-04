@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const fs = require("fs");
+const { joinEmailSender, emailSender } = require("./util");
 require("dotenv").config();
 const mongoDbAtlasURL = process.env.MONGODBATLAS;
 const app = express();
@@ -27,40 +29,30 @@ const User = mongoose.model("User", {
   email: String,
 });
 
+/* -------------------------------------------------------------------------- */
+/*                               APP.USE SECTION                              */
+/* -------------------------------------------------------------------------- */
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-
 const port = process.env.PORT || 3000;
 
-// Route to add the users to the DB
+/* -------------------------------------------------------------------------- */
+/*                              ENDPOINT TO JOIN                              */
+/* -------------------------------------------------------------------------- */
 app.post("/join", async (req, res) => {
-  try {
-    const user = new User({ email: req.body.email });
-    await user.save();
-    res.status(200).send("Thanks for signing up!");
-  } catch (error) {
-    res.status(500).send("There was an error please try again later");
-  }
+  const user = new User({ email: req.body.email });
+  await user.save();
+  joinEmailSender("./join_template.html", res, req, req.body.email);
 });
 
+/* -------------------------------------------------------------------------- */
+/*                           ENDPOINT TO SEND EMAIL                           */
+/* -------------------------------------------------------------------------- */
 app.post("/emails", async (req, res) => {
-  try {
-    const users = await User.find({});
-    const emailAddresses = users.map((user) => user.email);
-    // Construction of the emails
-    const message = {
-      to: emailAddresses,
-      from: "isaac231467@icloud.com",
-      subject: req.body.subject,
-      text: req.body.text,
-    };
-    // send using send grid
-    await sendgrid.send(message);
-    res.status(200).send("Emails have been sent!");
-  } catch (error) {
-    res.status(500).send(error);
-  }
+  const users = await User.find({});
+  const emailAddresses = users.map((user) => user.email);
+  emailSender("./email_template.html", emailAddresses, req, res);
 });
 
 app.listen(port, () => {
