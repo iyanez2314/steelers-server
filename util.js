@@ -2,6 +2,7 @@ require("dotenv").config();
 const fs = require("fs");
 const sendgrid = require("@sendgrid/mail");
 const sendGridAPIkey = process.env.SEND_GRID_API;
+const owner = process.env.OWNER;
 sendgrid.setApiKey(sendGridAPIkey);
 
 module.exports.joinEmailSender = function (fileName, res, req, emailAddress) {
@@ -19,7 +20,7 @@ module.exports.joinEmailSender = function (fileName, res, req, emailAddress) {
       const msg = {
         to: emailAddress,
         from: {
-          email: "isaac231467@icloud.com",
+          email: owner,
           name: "Isaac Yanez",
         },
         subject: "Welcome To The South Texas Steelers Fan Club!",
@@ -59,7 +60,7 @@ module.exports.emailSender = function (fileName, emailAddresses, req, res) {
       const msg = {
         to: emailAddresses,
         from: {
-          email: "isaac231467@icloud.com",
+          email: owner,
           name: "Isaac Yanez",
         },
         subject: "South Texas Steelers Fan Club Meetup",
