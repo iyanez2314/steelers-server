@@ -52,18 +52,15 @@ module.exports.emailSender = function (fileName, emailAddresses, req, res) {
           .json({ error: "Error Parsing the HTML Template" });
       }
 
-      const date = req.body.date;
-      const location = req.body.location;
+      const message = req.body.message;
 
-      const emailHtml = template
-        .replace("{{date}}", date)
-        .replace("{{location}}", location);
+      const emailHtml = template.replace("{{message}}", message);
 
       const msg = {
         to: emailAddresses,
         from: {
           email: owner,
-          name: "Isaac Yanez",
+          name: "Javi Contreras",
         },
         subject: "South Texas Steelers Fan Club Meetup",
         html: emailHtml,
