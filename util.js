@@ -21,7 +21,7 @@ module.exports.joinEmailSender = function (fileName, res, req, emailAddress) {
         to: emailAddress,
         from: {
           email: owner,
-          name: "Isaac Yanez",
+          name: "Javi Contreras",
         },
         subject: "Welcome To The South Texas Steelers Fan Club!",
         html: emailHtml,
