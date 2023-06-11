@@ -27,6 +27,8 @@ mongoose
 // Schema for the user model
 const User = mongoose.model("User", {
   email: String,
+  name: String,
+  phone: String,
 });
 
 /* -------------------------------------------------------------------------- */
@@ -42,14 +44,19 @@ const port = process.env.PORT || 3000;
 /* -------------------------------------------------------------------------- */
 app.post("/join", async (req, res) => {
   const userEmail = req.body.email;
+  const usersName = req.body.name;
+  const phoneNumber = req.body.phoneNumber;
   const existingUser = await User.findOne({ email: userEmail });
   if (existingUser) {
-    console.log("this email already exists");
     return res
       .status(400)
       .json({ error: "sorry this email is already signed up!" });
   } else {
-    const user = new User({ email: userEmail });
+    const user = new User({
+      email: userEmail,
+      name: usersName,
+      phone: phoneNumber,
+    });
     const saveUser = await user.save();
     joinEmailSender("./join_template.html", res, req, userEmail);
   }
