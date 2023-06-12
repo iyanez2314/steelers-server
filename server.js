@@ -3,7 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-const { joinEmailSender, emailSender } = require("./util");
+const { joinEmailSender, emailSender, sendText } = require("./util");
 require("dotenv").config();
 const mongoDbAtlasURL = process.env.MONGODBATLAS;
 const app = express();
@@ -59,7 +59,12 @@ app.post("/join", async (req, res) => {
     });
     const saveUser = await user.save();
     joinEmailSender("./join_template.html", res, req, userEmail);
+    sendText(saveUser);
   }
+});
+
+app.post("/test", async (req, res) => {
+  console.log("test endpoint hit");
 });
 
 /* -------------------------------------------------------------------------- */

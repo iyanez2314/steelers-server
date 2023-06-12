@@ -81,3 +81,19 @@ module.exports.emailSender = function (fileName, emailAddresses, req, res) {
     res.status(500).json({ error: "Internal error" });
   }
 };
+
+module.exports.sendText = function (user) {
+  const { name, email, phone } = user;
+
+  console.log("Sending text message....");
+  const accountSid = "AC6ecd6b90a6647924a0b57f65c8470e83";
+  const authToken = "501bcd0d651bb0e39e9b272c0ca67694";
+  const client = require("twilio")(accountSid, authToken);
+  client.messages
+    .create({
+      body: `Welcome ${name} to the South Texas Steelers Fan Club! All of our updates will be sent to this number. If you would like to unsubscribe please email us at ${email}`,
+      from: "+18449961106",
+      to: "+12109046185",
+    })
+    .then((message) => console.log(message.sid));
+};
