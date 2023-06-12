@@ -72,19 +72,14 @@ app.post("/remove", async (req, res) => {
   const body = req;
   const usersResponse = body.body["Body"];
   const usersPhoneNumber = body.body["From"];
-
-  console.log("usersResponse: ", usersResponse);
-  console.log("usersPhoneNumber: ", usersPhoneNumber);
-
   const usersNumber = usersPhoneNumber.slice(2);
+  if (usersResponse.toLowerCase() === "stop") {
+    const user = await User.findOne({ phone: usersNumber });
 
-  console.log(usersNumber);
-
-  const user = await User.findOne({ phone: usersNumber });
-
-  const removedUser = await User.deleteOne({ phone: usersNumber });
-  if (removedUser) {
-    removeText(user);
+    const removedUser = await User.deleteOne({ phone: usersNumber });
+    if (removedUser) {
+      removeText(user);
+    }
   }
 });
 
