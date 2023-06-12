@@ -72,8 +72,7 @@ app.post("/test", async (req, res) => {
   const body = req;
   console.log("Body =>", body);
   console.log("body.body =>", body.body["Body"]);
-
-  console.log("here with capital B=>", body.Body);
+  console.log("body.body =>", body.body["From"]);
   // sendTextTest(body);
 });
 
