@@ -98,7 +98,7 @@ module.exports.sendText = function (user) {
     .then((message) => console.log(message.sid));
 };
 
-module.exports.sendTextTest = function (body) {
+module.exports.removeText = function (body) {
   const accountSid = "AC6ecd6b90a6647924a0b57f65c8470e83";
   const authToken = "e1bbc0b6b3633ec24ad486dad7c1036b";
   const client = require("twilio")(accountSid, authToken);

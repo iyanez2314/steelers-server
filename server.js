@@ -7,7 +7,7 @@ const {
   joinEmailSender,
   emailSender,
   sendText,
-  sendTextTest,
+  removeText,
 } = require("./util");
 require("dotenv").config();
 const mongoDbAtlasURL = process.env.MONGODBATLAS;
@@ -68,12 +68,24 @@ app.post("/join", async (req, res) => {
   }
 });
 
-app.post("/test", async (req, res) => {
+app.post("/remove", async (req, res) => {
   const body = req;
-  console.log("Body =>", body);
-  console.log("body.body =>", body.body["Body"]);
-  console.log("body.body =>", body.body["From"]);
-  // sendTextTest(body);
+  const usersResponse = body.body["Body"];
+  const usersPhoneNumber = body.body["From"];
+
+  console.log("usersResponse: ", usersResponse);
+  console.log("usersPhoneNumber: ", usersPhoneNumber);
+
+  // remove the +1 from the phone number
+  // const usersNumber = usersPhoneNumber.split("").splice(0, 2).join("");
+
+  // console.log(usersNumber);
+
+  // const user = await User.findOne({ phone: usersNumber });
+
+  // console.log("user: ", user);
+
+  // removeText(usersResponse, usersPhoneNumber);
 });
 
 /* -------------------------------------------------------------------------- */
