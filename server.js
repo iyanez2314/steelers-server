@@ -84,9 +84,7 @@ app.post("/remove", async (req, res) => {
 
   removeText(user);
 
-  User.deleteOne({ phone: usersNumber }, function (err) {
-    if (err) return handleError(err);
-  });
+  User.deleteOne({ phone: usersNumber });
 });
 
 /* -------------------------------------------------------------------------- */
