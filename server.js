@@ -69,7 +69,8 @@ app.post("/join", async (req, res) => {
 });
 
 app.post("/test", async (req, res) => {
-  sendTextTest();
+  const body = req.body;
+  sendTextTest(body);
 });
 
 /* -------------------------------------------------------------------------- */
