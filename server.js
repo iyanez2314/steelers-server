@@ -71,6 +71,8 @@ app.post("/join", async (req, res) => {
 app.post("/test", async (req, res) => {
   const body = req;
   console.log(body);
+  console.log(body.body);
+  console.log(body.Body);
   // sendTextTest(body);
 });
 
