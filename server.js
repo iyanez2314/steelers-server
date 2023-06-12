@@ -82,9 +82,10 @@ app.post("/remove", async (req, res) => {
 
   const user = await User.findOne({ phone: usersNumber });
 
-  removeText(user);
-
-  User.deleteOne({ phone: usersNumber });
+  const removedUser = await User.deleteOne({ phone: usersNumber });
+  if (removedUser) {
+    removeText(user);
+  }
 });
 
 /* -------------------------------------------------------------------------- */
