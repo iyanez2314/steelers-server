@@ -73,7 +73,7 @@ app.post("/remove", async (req, res) => {
   const usersResponse = body.body["Body"];
   const usersPhoneNumber = body.body["From"];
   const usersNumber = usersPhoneNumber.slice(2);
-  if (usersResponse.toLowerCase() === "stop") {
+  if (usersResponse.toLowerCase() === "unsubscribe") {
     const user = await User.findOne({ phone: usersNumber });
 
     const removedUser = await User.deleteOne({ phone: usersNumber });

@@ -89,7 +89,7 @@ module.exports.sendText = function (user) {
   const client = require("twilio")(accountSid, authToken);
   client.messages
     .create({
-      body: `Welcome ${name} to the South Texas Steelers Fan Club! All of our updates will be sent to this number. If you would like to unsubscribe please reply with "STOP"`,
+      body: `Welcome ${name} to the South Texas Steelers Fan Club! All of our updates will be sent to this number. If you would like to unsubscribe please reply with "UNSUBSCRIBE"`,
       from: "+18449961106",
       to: "+12109046185",
     })
