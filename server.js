@@ -80,11 +80,13 @@ app.post("/remove", async (req, res) => {
 
   console.log(usersNumber);
 
-  // const user = await User.findOne({ phone: usersNumber });
+  const user = await User.findOne({ phone: usersNumber });
 
-  // console.log("user: ", user);
+  removeText(user);
 
-  // removeText(usersResponse, usersPhoneNumber);
+  User.deleteOne({ phone: usersNumber }, function (err) {
+    if (err) return handleError(err);
+  });
 });
 
 /* -------------------------------------------------------------------------- */

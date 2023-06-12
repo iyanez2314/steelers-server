@@ -98,14 +98,14 @@ module.exports.sendText = function (user) {
     .then((message) => console.log(message.sid));
 };
 
-module.exports.removeText = function (body) {
+module.exports.removeText = function (user) {
   const accountSid = "AC6ecd6b90a6647924a0b57f65c8470e83";
   const authToken = "e1bbc0b6b3633ec24ad486dad7c1036b";
 
   const client = require("twilio")(accountSid, authToken);
   client.messages
     .create({
-      body: `${body}`,
+      body: `Sad to see you go ${user.name}! If you would like to rejoin please head back to our website and sign up again!`,
       from: "+18449961106",
       to: "+12109046185",
     })
