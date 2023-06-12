@@ -3,7 +3,12 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-const { joinEmailSender, emailSender, sendText } = require("./util");
+const {
+  joinEmailSender,
+  emailSender,
+  sendText,
+  sendTextTest,
+} = require("./util");
 require("dotenv").config();
 const mongoDbAtlasURL = process.env.MONGODBATLAS;
 const app = express();
@@ -64,7 +69,7 @@ app.post("/join", async (req, res) => {
 });
 
 app.post("/test", async (req, res) => {
-  console.log("test endpoint hit");
+  sendTextTest();
 });
 
 /* -------------------------------------------------------------------------- */
