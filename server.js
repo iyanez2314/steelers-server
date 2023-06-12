@@ -76,10 +76,9 @@ app.post("/remove", async (req, res) => {
   console.log("usersResponse: ", usersResponse);
   console.log("usersPhoneNumber: ", usersPhoneNumber);
 
-  // remove the +1 from the phone number
-  // const usersNumber = usersPhoneNumber.split("").splice(0, 2).join("");
+  const usersNumber = usersPhoneNumber.split("").splice(0, 2).join("");
 
-  // console.log(usersNumber);
+  console.log(usersNumber);
 
   // const user = await User.findOne({ phone: usersNumber });
 
