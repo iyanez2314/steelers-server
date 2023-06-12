@@ -70,9 +70,11 @@ app.post("/join", async (req, res) => {
 
 app.post("/test", async (req, res) => {
   const body = req;
-  console.log(body);
-  console.log(body.body.body.from);
-  console.log("here lower b =>", body.from);
+  console.log("Body =>", body);
+  console.log("body.from =>", body.from);
+  console.log("body.body =>", body.body);
+  console.log("body.body.body => ", body.body.body.from);
+  console.log("body.body.body.from => ", body.body.body.from);
 
   console.log("here with capital B=>", body.Body);
   // sendTextTest(body);
